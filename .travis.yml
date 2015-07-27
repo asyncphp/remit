@@ -8,6 +8,7 @@ php:
     - 7.0
 
 before_script:
+    - phpenv config-add php.ini
     - composer self-update
     - composer install
 
