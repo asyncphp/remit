@@ -8,6 +8,8 @@
 
 Distributed event emitter. Compatible from PHP `5.3` to PHP `7`.
 
+> `2.x` supports PHP `5.5.9` and upwards. If you need PHP `5.3/4` support, use a `1.x` release.
+
 ## Usage
 
 Listening for events:
