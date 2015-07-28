@@ -24,4 +24,3 @@ branches:
 matrix:
     allow_failures:
         - php: 7.0
-        
