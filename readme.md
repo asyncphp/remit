@@ -14,6 +14,7 @@ Listening for events:
 
 ```php
 use AsyncPHP\Remit\Client\ZeroMqClient;
+use AsyncPHP\Remit\Client\ZeroMqServer;
 use AsyncPHP\Remit\Location\InMemoryLocation;
 
 $server = new ZeroMqServer(new InMemoryLocation("127.0.0.1", 5555));
@@ -21,18 +22,13 @@ $server = new ZeroMqServer(new InMemoryLocation("127.0.0.1", 5555));
 $server->addListener("my-event", function($param1, $param2) {
     // ...do a thing
 });
-```
-
-Emitting events:
-
-```php
-use AsyncPHP\Remit\Client\ZeroMqClient;
-use AsyncPHP\Remit\Location\InMemoryLocation;
 
 $client = new ZeroMqClient(new InMemoryLocation("127.0.0.1", 5555));
 
 $this->client->emit("my-event", array("foo", "bar"));
 ```
+
+You can find more in-depth documentation in [docs/en](docs/en/introduction.md).
 
 ## Motivation
 
