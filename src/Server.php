@@ -3,27 +3,27 @@
 namespace AsyncPHP\Remit;
 
 use Closure;
+use Serializable;
 
-interface Server
+interface Server extends Serializable
 {
     /**
-     * @todo description
-     *
      * @param string  $name
      * @param Closure $closure
      */
     public function removeListener($name, Closure $closure);
 
     /**
-     * @todo description
-     *
      * @param string  $name
      * @param Closure $closure
      */
     public function addListener($name, Closure $closure);
 
     /**
-     * @todo description
+     * @param string $name
+     * @param array  $parameters
      */
+    public function emit($name, array $parameters = array());
+
     public function tick();
 }

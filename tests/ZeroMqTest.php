@@ -93,4 +93,13 @@ class ZeroMqTest extends Test
             sleep(1);
         }
     }
+
+    /**
+     * @test
+     */
+    public function canBeSerialized()
+    {
+        $this->assertEquals($this->server, unserialize(serialize($this->server)));
+        $this->assertEquals($this->client, unserialize(serialize($this->client)));
+    }
 }

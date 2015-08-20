@@ -3,6 +3,7 @@
 namespace AsyncPHP\Remit\Server;
 
 use AsyncPHP\Remit\Event;
+use AsyncPHP\Remit\Event\InMemoryEvent;
 use AsyncPHP\Remit\Location;
 use AsyncPHP\Remit\Server;
 use Closure;
@@ -109,6 +110,8 @@ class ZeroMqServer implements Server
 
     /**
      * @param Event $event
+     *
+     * @return $this
      */
     protected function dispatchEvent(Event $event)
     {
@@ -118,6 +121,59 @@ class ZeroMqServer implements Server
             foreach ($this->listeners[$name] as $closure) {
                 call_user_func_array($closure, $event->getParameters());
             }
+        }
+
+        return $this;
+    }
+
+    /**
+     * @param string $name
+     * @param array  $parameters
+     *
+     * @return $this
+     */
+    public function emit($name, array $parameters = array())
+    {
+        return $this->dispatchEvent(
+            new InMemoryEvent($name, $parameters)
+        );
+    }
+
+    /**
+     * @inheritdoc
+     *
+     * @return string
+     */
+    public function serialize()
+    {
+        return serialize($this->location);
+    }
+
+    /**
+     * @inheritdoc
+     *
+     * @param string $serialized
+     */
+    public function unserialize($serialized)
+    {
+        $this->location = unserialize($serialized);
+    }
+
+    /**
+     * @return Location
+     */
+    public function getLocation()
+    {
+        return $this->location;
+    }
+
+    public function __destruct()
+    {
+        if ($this->socket) {
+            $host = $this->location->getHost();
+            $port = $this->location->getPort();
+
+            $this->socket->disconnect("tcp://{$host}:$port");
         }
     }
 }
