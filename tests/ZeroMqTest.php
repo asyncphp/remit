@@ -39,10 +39,6 @@ class ZeroMqTest extends Test
      */
     public function emitsToListeners()
     {
-        if (!class_exists("ZMQ")) {
-            $this->markTestSkipped("ZeroMq extension is not installed");
-        }
-
         $store = 0;
 
         $listener = function ($add) use (&$store) {
