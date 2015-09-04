@@ -45,4 +45,30 @@ class InMemoryLocation implements Location
     {
         return $this->port;
     }
+
+    /**
+     * @inheritdoc
+     *
+     * @return string
+     */
+    public function serialize()
+    {
+        return serialize(array(
+            "host" => $this->host,
+            "port" => $this->port,
+        ));
+    }
+
+    /**
+     * @inheritdoc
+     *
+     * @param string $serialized
+     */
+    public function unserialize($serialized)
+    {
+        $unserialized = unserialize($serialized);
+
+        $this->host = $unserialized["host"];
+        $this->port = $unserialized["port"];
+    }
 }

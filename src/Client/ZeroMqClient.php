@@ -71,4 +71,42 @@ class ZeroMqClient implements Client
 
         return $this->socket;
     }
+
+    /**
+     * @inheritdoc
+     *
+     * @return string
+     */
+    public function serialize()
+    {
+        return serialize($this->location);
+    }
+
+    /**
+     * @inheritdoc
+     *
+     * @param string $serialized
+     */
+    public function unserialize($serialized)
+    {
+        $this->location = unserialize($serialized);
+    }
+
+    /**
+     * @return Location
+     */
+    public function getLocation()
+    {
+        return $this->location;
+    }
+
+    public function __destruct()
+    {
+        if ($this->socket) {
+            $host = $this->location->getHost();
+            $port = $this->location->getPort();
+
+            $this->socket->disconnect("tcp://{$host}:$port");
+        }
+    }
 }

@@ -2,12 +2,13 @@
 
 namespace AsyncPHP\Remit;
 
-interface Client
+use Serializable;
+
+interface Client extends Serializable
 {
     /**
-     * @todo description
-     *
      * @param string $name
+     * @param array  $parameters
      */
-    public function emit($name);
+    public function emit($name, array $parameters = array());
 }

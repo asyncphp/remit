@@ -2,18 +2,16 @@
 
 namespace AsyncPHP\Remit;
 
-interface Location
+use Serializable;
+
+interface Location extends Serializable
 {
     /**
-     * @todo description
-     *
      * @return string
      */
     public function getHost();
 
     /**
-     * @todo description
-     *
      * @return int
      */
     public function getPort();
