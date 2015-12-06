@@ -15,13 +15,13 @@ final class InMemoryEvent implements Event
     /**
      * @var array
      */
-    private $parameters = array();
+    private $parameters = [];
 
     /**
      * @param string $name
      * @param array $parameters
      */
-    public function __construct($name, array $parameters = array())
+    public function __construct($name, array $parameters = [])
     {
         $this->name = $name;
         $this->parameters = $parameters;
@@ -34,10 +34,10 @@ final class InMemoryEvent implements Event
      */
     public function serialize()
     {
-        return serialize(array(
+        return serialize([
             "name" => $this->name,
             "parameters" => $this->parameters,
-        ));
+        ]);
     }
 
     /**

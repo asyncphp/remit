@@ -34,7 +34,7 @@ interface Server extends Serializable
      * @param string $name
      * @param array $parameters
      */
-    public function emit($name, array $parameters = array());
+    public function emit($name, array $parameters = []);
 
     /**
      * Checks for waiting events.

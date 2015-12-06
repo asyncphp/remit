@@ -34,7 +34,7 @@ final class ZeroMqClient implements Client
      * @param string $name
      * @param array $parameters
      */
-    public function emit($name, array $parameters = array())
+    public function emit($name, array $parameters = [])
     {
         $socket = $this->getSocket();
 
@@ -49,7 +49,7 @@ final class ZeroMqClient implements Client
      *
      * @return Event
      */
-    private function newEvent($name, array $parameters)
+    private function newEvent($name, array $parameters = [])
     {
         return new InMemoryEvent($name, $parameters);
     }

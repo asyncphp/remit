@@ -26,7 +26,7 @@ final class ZeroMqServer implements Server
     /**
      * @var array
      */
-    private $listeners = array();
+    private $listeners = [];
 
     /**
      * @param Location $location
@@ -134,7 +134,7 @@ final class ZeroMqServer implements Server
      *
      * @return $this
      */
-    public function emit($name, array $parameters = array())
+    public function emit($name, array $parameters = [])
     {
         return $this->dispatchEvent(
             new InMemoryEvent($name, $parameters)

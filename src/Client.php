@@ -17,7 +17,7 @@ interface Client extends Serializable
      * @param string $name
      * @param array $parameters
      */
-    public function emit($name, array $parameters = array());
+    public function emit($name, array $parameters = []);
 
     /**
      * Closes the connection to a server.

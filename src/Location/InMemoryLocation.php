@@ -53,10 +53,10 @@ final class InMemoryLocation implements Location
      */
     public function serialize()
     {
-        return serialize(array(
+        return serialize([
             "host" => $this->host,
             "port" => $this->port,
-        ));
+        ]);
     }
 
     /**
