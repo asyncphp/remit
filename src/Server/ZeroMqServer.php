@@ -7,6 +7,7 @@ use AsyncPHP\Remit\Event\InMemoryEvent;
 use AsyncPHP\Remit\Location;
 use AsyncPHP\Remit\Server;
 use Closure;
+use Exception;
 use ZMQ;
 use ZMQContext;
 use ZMQSocket;

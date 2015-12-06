@@ -6,6 +6,7 @@ use AsyncPHP\Remit\Client;
 use AsyncPHP\Remit\Event;
 use AsyncPHP\Remit\Event\InMemoryEvent;
 use AsyncPHP\Remit\Location;
+use Exception;
 use ZMQ;
 use ZMQContext;
 use ZMQSocket;
@@ -105,13 +106,15 @@ final class ZeroMqClient implements Client
      */
     public function disconnect()
     {
-        try {
-            $host = $this->location->getHost();
-            $port = $this->location->getPort();
+        if ($this->socket) {
+            try {
+                $host = $this->location->getHost();
+                $port = $this->location->getPort();
 
-            $this->socket->disconnect("tcp://{$host}:{$port}");
-        } catch (Exception $exception) {
-            // TODO: find an elegant way to deal with this
+                $this->socket->disconnect("tcp://{$host}:{$port}");
+            } catch (Exception $exception) {
+                // TODO: find an elegant way to deal with this
+            }
         }
     }
 
