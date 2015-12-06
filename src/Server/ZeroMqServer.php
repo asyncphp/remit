@@ -175,10 +175,14 @@ final class ZeroMqServer implements Server
     public function disconnect()
     {
         if ($this->socket) {
-            $host = $this->location->getHost();
-            $port = $this->location->getPort();
+            try {
+                $host = $this->location->getHost();
+                $port = $this->location->getPort();
 
-            $this->socket->disconnect("tcp://{$host}:$port");
+                $this->socket->disconnect("tcp://{$host}:{$port}");
+            } catch (Exception $exception) {
+                // TODO: find an elegant way to deal with this
+            }
         }
     }
 
