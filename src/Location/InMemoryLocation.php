@@ -4,21 +4,21 @@ namespace AsyncPHP\Remit\Location;
 
 use AsyncPHP\Remit\Location;
 
-class InMemoryLocation implements Location
+final class InMemoryLocation implements Location
 {
     /**
      * @var string
      */
-    protected $host;
+    private $host;
 
     /**
      * @var int
      */
-    protected $port;
+    private $port;
 
     /**
      * @param string $host
-     * @param int    $port
+     * @param int $port
      */
     public function __construct($host, $port)
     {

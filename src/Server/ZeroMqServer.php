@@ -11,22 +11,22 @@ use ZMQ;
 use ZMQContext;
 use ZMQSocket;
 
-class ZeroMqServer implements Server
+final class ZeroMqServer implements Server
 {
     /**
      * @var Location
      */
-    protected $location;
+    private $location;
 
     /**
      * @var ZMQSocket
      */
-    protected $socket;
+    private $socket;
 
     /**
      * @var array
      */
-    protected $listeners = array();
+    private $listeners = array();
 
     /**
      * @param Location $location
@@ -39,7 +39,7 @@ class ZeroMqServer implements Server
     /**
      * @inheritdoc
      *
-     * @param string  $name
+     * @param string $name
      * @param Closure $closure
      *
      * @return $this
@@ -58,7 +58,7 @@ class ZeroMqServer implements Server
     /**
      * @inheritdoc
      *
-     * @param string  $name
+     * @param string $name
      * @param Closure $closure
      */
     public function removeListener($name, Closure $closure)
@@ -93,7 +93,7 @@ class ZeroMqServer implements Server
     /**
      * @return ZMQSocket
      */
-    protected function getSocket()
+    private function getSocket()
     {
         if ($this->socket === null) {
             $context = new ZMQContext();
@@ -113,7 +113,7 @@ class ZeroMqServer implements Server
      *
      * @return $this
      */
-    protected function dispatchEvent(Event $event)
+    private function dispatchEvent(Event $event)
     {
         $name = $event->getName();
 
@@ -127,8 +127,10 @@ class ZeroMqServer implements Server
     }
 
     /**
+     * @inheritdoc
+     *
      * @param string $name
-     * @param array  $parameters
+     * @param array $parameters
      *
      * @return $this
      */
@@ -167,7 +169,10 @@ class ZeroMqServer implements Server
         return $this->location;
     }
 
-    public function __destruct()
+    /**
+     * @inheritdoc
+     */
+    public function disconnect()
     {
         if ($this->socket) {
             $host = $this->location->getHost();
@@ -175,5 +180,10 @@ class ZeroMqServer implements Server
 
             $this->socket->disconnect("tcp://{$host}:$port");
         }
+    }
+
+    public function __destruct()
+    {
+        $this->disconnect();
     }
 }

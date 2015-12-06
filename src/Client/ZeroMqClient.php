@@ -10,17 +10,17 @@ use ZMQ;
 use ZMQContext;
 use ZMQSocket;
 
-class ZeroMqClient implements Client
+final class ZeroMqClient implements Client
 {
     /**
      * @var Location
      */
-    protected $location;
+    private $location;
 
     /**
      * @var ZMQSocket
      */
-    protected $socket;
+    private $socket;
 
     /**
      * @param Location $location
@@ -32,7 +32,7 @@ class ZeroMqClient implements Client
 
     /**
      * @param string $name
-     * @param array  $parameters
+     * @param array $parameters
      */
     public function emit($name, array $parameters = array())
     {
@@ -45,11 +45,11 @@ class ZeroMqClient implements Client
 
     /**
      * @param string $name
-     * @param array  $parameters
+     * @param array $parameters
      *
      * @return Event
      */
-    protected function newEvent($name, array $parameters)
+    private function newEvent($name, array $parameters)
     {
         return new InMemoryEvent($name, $parameters);
     }
@@ -57,7 +57,7 @@ class ZeroMqClient implements Client
     /**
      * @return ZMQSocket
      */
-    protected function getSocket()
+    private function getSocket()
     {
         if ($this->socket === null) {
             $context = new ZMQContext();
@@ -100,7 +100,10 @@ class ZeroMqClient implements Client
         return $this->location;
     }
 
-    public function __destruct()
+    /**
+     * @inheritdoc
+     */
+    public function disconnect()
     {
         if ($this->socket) {
             $host = $this->location->getHost();
@@ -108,5 +111,10 @@ class ZeroMqClient implements Client
 
             $this->socket->disconnect("tcp://{$host}:$port");
         }
+    }
+
+    public function __destruct()
+    {
+        $this->disconnect();
     }
 }

@@ -5,21 +5,21 @@ namespace AsyncPHP\Remit\Event;
 use AsyncPHP\Remit\Event;
 use InvalidArgumentException;
 
-class InMemoryEvent implements Event
+final class InMemoryEvent implements Event
 {
     /**
      * @var string
      */
-    protected $name;
+    private $name;
 
     /**
      * @var array
      */
-    protected $parameters = array();
+    private $parameters = array();
 
     /**
      * @param string $name
-     * @param array  $parameters
+     * @param array $parameters
      */
     public function __construct($name, array $parameters = array())
     {
@@ -35,7 +35,7 @@ class InMemoryEvent implements Event
     public function serialize()
     {
         return serialize(array(
-            "name"       => $this->name,
+            "name" => $this->name,
             "parameters" => $this->parameters,
         ));
     }
